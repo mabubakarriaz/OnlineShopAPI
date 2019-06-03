@@ -41,13 +41,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Cart.cs" />
-    <Compile Include="CartItem.cs" />
-    <Compile Include="CartStatus.cs" />
-    <Compile Include="Category.cs" />
-    <Compile Include="Customer.cs" />
-    <Compile Include="Product.cs" />
+    <Compile Include="DataHelper\ProductDataHelper.cs" />
+    <Compile Include="Data\QueryExecute.cs" />
+    <Compile Include="Entity\Cart.cs" />
+    <Compile Include="Entity\CartItem.cs" />
+    <Compile Include="Entity\CartStatus.cs" />
+    <Compile Include="Entity\Category.cs" />
+    <Compile Include="Entity\Customer.cs" />
+    <Compile Include="Entity\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataHandler\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

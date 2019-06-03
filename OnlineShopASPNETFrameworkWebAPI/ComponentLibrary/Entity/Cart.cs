@@ -1,10 +1,11 @@
-﻿using System;
+﻿using Com.CompanyName.OnlineShop.Entities.ComponentLibrary;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Com.CompanyName.OnlineShop.ComponentLibrary
+namespace Com.CompanyName.OnlineShop.Entity.ComponentLibrary
 {
     public class Cart
     {
