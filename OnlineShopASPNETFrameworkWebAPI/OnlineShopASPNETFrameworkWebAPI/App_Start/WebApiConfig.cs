@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 
-namespace OnlineShopASPNETFrameworkWebAPI
+namespace Com.CompanyName.OnlineShop
 {
     public static class WebApiConfig
     {
