@@ -32,6 +32,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -41,7 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataHandler\ProductDataHandler.cs" />
     <Compile Include="DataHelper\ProductDataHelper.cs" />
+    <Compile Include="Data\IDataHandler.cs" />
+    <Compile Include="Data\IDataHelper.cs" />
     <Compile Include="Data\QueryExecute.cs" />
     <Compile Include="Entity\Cart.cs" />
     <Compile Include="Entity\CartItem.cs" />
@@ -51,8 +55,6 @@
     <Compile Include="Entity\Product.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataHandler\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

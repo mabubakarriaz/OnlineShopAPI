@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHelper
 {
-    public class ProductDataHelper
+    internal class ProductDataHelper : IDataHelper<Product>
     {
         private string _ConnectionString { get; set; }
         public ProductDataHelper(string connectionString)
@@ -27,7 +27,7 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHelper
         private readonly string VW_SELECT = "Select * from dbo.vw_Products";
         private readonly string SP_SEARCH = "dbo.usp_Product_SEARCH";
 
-        internal int Delete(Product entity)
+        public int Delete(Product entity)
         {
             SqlParameter[] SP_Parameters = {
                 new SqlParameter("@ProductId", entity.ProductId)
@@ -36,7 +36,7 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHelper
             return QueryExecute.StoredProcedureScalar(_ConnectionString, SP_DELETE, SP_Parameters);
         }
 
-        internal int Insert(Product entity)
+        public int Insert(Product entity)
         {
             SqlParameter[] SP_Parameters = {
                 new SqlParameter("@ProductId", entity.ProductId)
@@ -47,7 +47,7 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHelper
             return QueryExecute.StoredProcedureScalar(_ConnectionString, SP_INSERT, SP_Parameters);
         }
 
-        internal void Update(Product entity)
+        public int Update(Product entity)
         {
             SqlParameter[] SP_Parameters = {
                 new SqlParameter("@ProductId", entity.ProductId)
@@ -55,10 +55,10 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHelper
                 ,new SqlParameter("@Description", entity.Description)
             };
 
-            QueryExecute.StoredProcedureScalar(_ConnectionString, SP_UPDATE, SP_Parameters);
+            return QueryExecute.StoredProcedureScalar(_ConnectionString, SP_UPDATE, SP_Parameters);
         }
 
-        internal IEnumerable<Product> Select()
+        public IEnumerable<Product> Select()
         {
             List<Product> list = new List<Product>();
 
@@ -76,7 +76,7 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHelper
             return list;
         }
 
-        internal Product Select(int key)
+        public Product Select(int key)
         {
 
             SqlParameter[] SP_Parameters = {
@@ -89,7 +89,7 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHelper
             return new Product(dataSet.Tables[0].Rows[0]); //single dataset single row
         }
 
-        internal IEnumerable<Product> Find(string name)
+        public IEnumerable<Product> Find(string name)
         {
             List<Product> list = new List<Product>();
 
