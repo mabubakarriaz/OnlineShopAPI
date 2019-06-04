@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 
 namespace Com.CompanyName.OnlineShop.ComponentLibrary.Entity
 {
@@ -19,6 +14,6 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.Entity
         public string CategoryName { get; set; }
         public string SubCategoryName { get; set; }
 
-        public ICollection<Product> Products  { get; set; }
+        public ICollection<Product> Products { get; set; }
     }
 }

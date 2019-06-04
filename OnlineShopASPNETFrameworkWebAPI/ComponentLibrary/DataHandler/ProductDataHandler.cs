@@ -6,12 +6,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
 {
-    public class ProductDataHandler : IDataHandler<Product>, IDisposable 
+    public class ProductDataHandler : IDataHandler<Product>, IDisposable
     {
         private OnlineShopContext _db = new OnlineShopContext();
         private string _connectionString;

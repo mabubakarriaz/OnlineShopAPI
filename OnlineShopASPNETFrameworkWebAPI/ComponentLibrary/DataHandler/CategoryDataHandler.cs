@@ -6,12 +6,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data.Entity;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
 {
-    public class CategoryDataHandler : IDataHandler<Category> ,IDisposable  
+    public class CategoryDataHandler : IDataHandler<Category>, IDisposable
     {
         private OnlineShopContext _db = new OnlineShopContext();
         private string _connectionString;
@@ -42,7 +40,7 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             {
                 _db.Entry(aType).State = EntityState.Added;
                 _db.SaveChanges();
-                key= aType.CategoryId;
+                key = aType.CategoryId;
             }
             catch (Exception)
             {
