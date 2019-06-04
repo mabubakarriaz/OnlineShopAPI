@@ -11,19 +11,19 @@ using System.Threading.Tasks;
 
 namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
 {
-    public class ProductDataHandler : IDataHandler<Product>, IDisposable 
+    public class CustomerDataHandler : IDataHandler<Customer>, IDisposable
     {
         private OnlineShopContext _db = new OnlineShopContext();
         private string _connectionString;
 
 
 
-        public ProductDataHandler()
+        public CustomerDataHandler()
         {
             ConnectionString = ConfigurationManager.ConnectionStrings["yourconnectinstringName"].ConnectionString;
         }
 
-        public ProductDataHandler(string aConnectionString)
+        public CustomerDataHandler(string aConnectionString)
         {
             ConnectionString = aConnectionString;
         }
@@ -38,7 +38,7 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             }
         }
 
-        public int Add(Product aType)
+        public int Add(Customer aType)
         {
             int key = -1;
 
@@ -46,7 +46,7 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             {
                 _db.Entry(aType).State = EntityState.Added;
                 _db.SaveChanges();
-                key = aType.ProductId;
+                key = aType.CustomerId;
             }
             catch (Exception)
             {
@@ -56,7 +56,7 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             return key;
         }
 
-        public int Change(Product aType)
+        public int Change(Customer aType)
         {
             try
             {
@@ -69,7 +69,7 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             }
         }
 
-        public int Remove(Product aType)
+        public int Remove(Customer aType)
         {
             try
             {
@@ -82,13 +82,13 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             }
         }
 
-        public IEnumerable<Product> Get()
+        public IEnumerable<Customer> Get()
         {
-            IEnumerable<Product> list = new List<Product>();
+            IEnumerable<Customer> list = new List<Customer>();
 
             try
             {
-                list = _db.Products.ToList();
+                list = _db.Customers.ToList();
             }
             catch (Exception)
             {
@@ -98,13 +98,13 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             return list;
         }
 
-        public Product Get(int key)
+        public Customer Get(int key)
         {
-            Product entity = new Product();
+            Customer entity = new Customer();
 
             try
             {
-                entity = _db.Products.Find(key);
+                entity = _db.Customers.Find(key);
             }
             catch (Exception)
             {
@@ -114,13 +114,13 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             return entity;
         }
 
-        public IEnumerable<Product> Get(string name)
+        public IEnumerable<Customer> Get(string name)
         {
-            IEnumerable<Product> list = new List<Product>();
+            IEnumerable<Customer> list = new List<Customer>();
 
             try
             {
-                list = _db.Products.Where(w => w.Name.Contains(name)).ToList();
+                list = _db.Customers.Where(w => w.Name.Contains(name)).ToList();
             }
             catch (Exception)
             {
@@ -141,7 +141,7 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             _db.Dispose();
         }
 
-        ~ProductDataHandler()
+        ~CustomerDataHandler()
         {
             Dispose(false);
         }

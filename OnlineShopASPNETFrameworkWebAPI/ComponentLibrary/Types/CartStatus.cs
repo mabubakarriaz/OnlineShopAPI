@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Com.CompanyName.OnlineShop.Entity.ComponentLibrary
+namespace Com.CompanyName.OnlineShop.ComponentLibrary.Types
 {
     public enum CartStatus
     {

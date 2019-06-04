@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Com.CompanyName.OnlineShop.Entity.ComponentLibrary
+namespace Com.CompanyName.OnlineShop.ComponentLibrary.Entity
 {
     public class Product
     {
@@ -14,10 +14,6 @@ namespace Com.CompanyName.OnlineShop.Entity.ComponentLibrary
 
         }
 
-        public Product(DataRow row)
-        {
-
-        }
 
         public int ProductId { get; set; }
         public string Name { get; set; }

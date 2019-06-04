@@ -11,19 +11,16 @@ using System.Threading.Tasks;
 
 namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
 {
-    public class ProductDataHandler : IDataHandler<Product>, IDisposable 
+    public class CategoryDataHandler : IDataHandler<Category> ,IDisposable  
     {
         private OnlineShopContext _db = new OnlineShopContext();
         private string _connectionString;
 
-
-
-        public ProductDataHandler()
+        public CategoryDataHandler()
         {
             ConnectionString = ConfigurationManager.ConnectionStrings["yourconnectinstringName"].ConnectionString;
         }
-
-        public ProductDataHandler(string aConnectionString)
+        public CategoryDataHandler(string aConnectionString)
         {
             ConnectionString = aConnectionString;
         }
@@ -38,15 +35,14 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             }
         }
 
-        public int Add(Product aType)
+        public int Add(Category aType)
         {
             int key = -1;
-
             try
             {
                 _db.Entry(aType).State = EntityState.Added;
                 _db.SaveChanges();
-                key = aType.ProductId;
+                key= aType.CategoryId;
             }
             catch (Exception)
             {
@@ -56,7 +52,7 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             return key;
         }
 
-        public int Change(Product aType)
+        public int Change(Category aType)
         {
             try
             {
@@ -69,7 +65,7 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             }
         }
 
-        public int Remove(Product aType)
+        public int Remove(Category aType)
         {
             try
             {
@@ -82,13 +78,13 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             }
         }
 
-        public IEnumerable<Product> Get()
+        public IEnumerable<Category> Get()
         {
-            IEnumerable<Product> list = new List<Product>();
+            IEnumerable<Category> list = new List<Category>();
 
             try
             {
-                list = _db.Products.ToList();
+                list = _db.Categories.ToList();
             }
             catch (Exception)
             {
@@ -98,13 +94,13 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             return list;
         }
 
-        public Product Get(int key)
+        public Category Get(int key)
         {
-            Product entity = new Product();
+            Category entity = new Category();
 
             try
             {
-                entity = _db.Products.Find(key);
+                entity = _db.Categories.Find(key);
             }
             catch (Exception)
             {
@@ -114,13 +110,13 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             return entity;
         }
 
-        public IEnumerable<Product> Get(string name)
+        public IEnumerable<Category> Get(string name)
         {
-            IEnumerable<Product> list = new List<Product>();
+            IEnumerable<Category> list = new List<Category>();
 
             try
             {
-                list = _db.Products.Where(w => w.Name.Contains(name)).ToList();
+                list = _db.Categories.Where(w => w.CategoryName.Contains(name)).ToList();
             }
             catch (Exception)
             {
@@ -141,10 +137,9 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             _db.Dispose();
         }
 
-        ~ProductDataHandler()
+        ~CategoryDataHandler()
         {
             Dispose(false);
         }
-
     }
 }

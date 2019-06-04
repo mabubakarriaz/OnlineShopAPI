@@ -31,9 +31,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -42,19 +50,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataHandler\CartDataHandler.cs" />
+    <Compile Include="DataHandler\CartItemDataHandler.cs" />
+    <Compile Include="DataHandler\CategoryDataHandler.cs" />
+    <Compile Include="DataHandler\CustomerDataHandler.cs" />
     <Compile Include="DataHandler\ProductDataHandler.cs" />
-    <Compile Include="DataHelper\ProductDataHelper.cs" />
     <Compile Include="Data\IDataHandler.cs" />
-    <Compile Include="Data\IDataHelper.cs" />
     <Compile Include="Data\QueryExecute.cs" />
     <Compile Include="Entity\Cart.cs" />
     <Compile Include="Entity\CartItem.cs" />
-    <Compile Include="Entity\CartStatus.cs" />
+    <Compile Include="Types\CartStatus.cs" />
     <Compile Include="Entity\Category.cs" />
     <Compile Include="Entity\Customer.cs" />
     <Compile Include="Entity\Product.cs" />
+    <Compile Include="Model\OnlineShopContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

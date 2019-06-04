@@ -12,9 +12,9 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.Data
 
         int Add(T aType);
 
-        void Change(T aType);
+        int Change(T aType);
 
-        void Remove(T aType);
+        int Remove(T aType);
 
         IEnumerable<T> Get();
 
