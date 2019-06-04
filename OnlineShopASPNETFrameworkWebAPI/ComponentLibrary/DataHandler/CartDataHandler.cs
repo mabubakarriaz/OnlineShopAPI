@@ -16,7 +16,7 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
 
         public CartDataHandler()
         {
-            ConnectionString = ConfigurationManager.ConnectionStrings["yourconnectinstringName"].ConnectionString;
+            ConnectionString = ConfigurationManager.ConnectionStrings["OnlineShop"].ConnectionString;
         }
         public CartDataHandler(string aConnectionString)
         {

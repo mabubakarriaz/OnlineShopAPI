@@ -5,7 +5,7 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.Model
 {
     public class OnlineShopContext : DbContext
     {
-        public OnlineShopContext()
+        public OnlineShopContext() :base("name=OnlineShop")
         {
 
         }

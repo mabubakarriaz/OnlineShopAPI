@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Com.CompanyName.OnlineShop.ComponentLibrary.Entity
 {
@@ -9,8 +10,8 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.Entity
 
         }
 
+        [Key]
         public int CategoryId { get; set; }
-        public int MyProperty { get; set; }
         public string CategoryName { get; set; }
         public string SubCategoryName { get; set; }
 

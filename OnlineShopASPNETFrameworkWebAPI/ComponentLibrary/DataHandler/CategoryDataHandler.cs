@@ -16,7 +16,7 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
 
         public CategoryDataHandler()
         {
-            ConnectionString = ConfigurationManager.ConnectionStrings["yourconnectinstringName"].ConnectionString;
+            ConnectionString = ConfigurationManager.ConnectionStrings["OnlineShop"].ConnectionString;
         }
         public CategoryDataHandler(string aConnectionString)
         {
