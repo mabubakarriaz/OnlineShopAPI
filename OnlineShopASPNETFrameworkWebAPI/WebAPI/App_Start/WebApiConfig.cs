@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Com.CompanyName.OnlineShop.WebAPI.Filter;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -10,7 +11,8 @@ namespace Com.CompanyName.OnlineShop.WebAPI
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
-            config.Formatters.XmlFormatter.UseXmlSerializer = true;
+            config.Filters.Add(new DbUpdateExceptionFilterAttribute());
+
             // Web API routes
             config.MapHttpAttributeRoutes();
 

@@ -29,19 +29,10 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
         [ResponseType(typeof(IEnumerable<Product>))]
         public IHttpActionResult Get()
         {
-            try
+            using (handler)
             {
-                using (handler)
-                {
-                    return Ok(handler.Get());
-                }
-
+                return Ok(handler.Get());
             }
-            catch (SqlException)
-            {
-                return InternalServerError();
-            }
-
         }
 
         /// <summary>
@@ -49,52 +40,39 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
         /// </summary>
         /// <param name="id">product primary key</param>
         /// <returns>an object of product type</returns>
-        [Route("{id:int}"),HttpGet]
+        [Route("{id:int}"), HttpGet]
         [ResponseType(typeof(Product))]
         public IHttpActionResult Get([FromUri]int id)
         {
-            try
+            Product product = null;
+
+            using (handler)
             {
-                Product product = null;
-
-                using (handler)
-                {
-                    product = handler.Get(id);
-                }
-
-                if (product == null)
-                {
-                    return NotFound();
-                }
-
-                return Ok(product);
+                product = handler.Get(id);
             }
-            catch (SqlException)
+
+            if (product == null)
             {
-                return InternalServerError();
+                return NotFound();
             }
-            
+
+            return Ok(product);
+
         }
 
         /// <summary>
         /// find products as per given name
         /// </summary>
         /// <returns>Enumerable list of product type</returns>
-        [Route("{name:alpha}"),HttpGet]
+        [Route("{name:alpha}"), HttpGet]
         [ResponseType(typeof(IEnumerable<Product>))]
         public IHttpActionResult Find([FromUri]string name)
         {
-            try
+            using (handler)
             {
-                using (handler)
-                {
-                    return Ok(handler.Find(name));
-                }
+                return Ok(handler.Find(name));
             }
-            catch (SqlException)
-            {
-                return InternalServerError();
-            }
+
         }
 
         /// <summary>
@@ -103,9 +81,9 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
         /// <param name="id">product primary key that needs to be changed</param>
         /// <param name="product">complete product type with changed data</param>
         /// <returns>Model state is return in case of invalid changes</returns>
-        
+
         [HttpPut]
-        public IHttpActionResult Change([FromUri]int id,[FromBody] Product product)
+        public IHttpActionResult Change([FromUri]int id, [FromBody] Product product)
         {
             product.ProductId = id;
 
@@ -114,23 +92,16 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            try
+            using (handler)
             {
-                using (handler)
+                if (Exists(id))
                 {
-                    if (Exists(id))
-                    {
-                        handler.Change(product);
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
+                    handler.Change(product);
                 }
-            }
-            catch (SqlException)
-            {
-                return InternalServerError();
+                else
+                {
+                    return NotFound();
+                }
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -149,16 +120,9 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            try
+            using (handler)
             {
-                using (handler)
-                {
-                    handler.Add(product);
-                }
-            }
-            catch (SqlException)
-            {
-                return InternalServerError();
+                handler.Add(product);
             }
 
             return StatusCode(HttpStatusCode.NoContent);
@@ -171,28 +135,21 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
         /// <returns>No content is returned</returns>
         [HttpDelete]
         public IHttpActionResult Remove([FromUri]int id)
-        {   
-            try
-            {
-                Product product = null;
+        {
+            Product product = null;
 
-                using (handler)
+            using (handler)
+            {
+                if (Exists(id))
                 {
-                    if (Exists(id))
-                    {
-                        handler.Remove(product);
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
+                    handler.Remove(product);
+                }
+                else
+                {
+                    return NotFound();
                 }
             }
-            catch (SqlException)
-            {
-                return InternalServerError();
-            }
-            
+
             return StatusCode(HttpStatusCode.NoContent);
         }
 

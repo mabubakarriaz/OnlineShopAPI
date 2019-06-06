@@ -17,11 +17,13 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.Entity
         [Required]
         [StringLength(50)]
         [Column(TypeName = "varchar(50)")]
+        [RegularExpression(@"^[a-z A-Z]+$", ErrorMessage = "Use alphabets only please")]
         public string CategoryName { get; set; }
 
         [Required]
         [StringLength(50)]
         [Column(TypeName = "varchar(50)")]
+        [RegularExpression(@"^[a-z A-Z]+$", ErrorMessage = "Use alphabets only please")]
         public string SubCategoryName { get; set; }
 
         public ICollection<Product> Products { get; set; }
