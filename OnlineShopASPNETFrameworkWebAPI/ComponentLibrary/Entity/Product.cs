@@ -2,6 +2,7 @@
 
 namespace Com.CompanyName.OnlineShop.ComponentLibrary.Entity
 {
+
     public class Product
     {
         public Product()

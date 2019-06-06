@@ -76,6 +76,27 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
         }
 
         /// <summary>
+        /// find products as per given name
+        /// </summary>
+        /// <returns>Enumerable list of product type</returns>
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Product>))]
+        public IHttpActionResult Get([FromUri]string name)
+        {
+            try
+            {
+                using (handler)
+                {
+                    return Ok(handler.Get(name));
+                }
+            }
+            catch (SqlException)
+            {
+                return InternalServerError();
+            }
+        }
+
+        /// <summary>
         /// Update an existing product
         /// </summary>
         /// <param name="id">product primary key that needs to be changed</param>
