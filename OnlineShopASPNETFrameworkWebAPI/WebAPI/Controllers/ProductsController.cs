@@ -3,68 +3,86 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Com.CompanyName.OnlineShop.ComponentLibrary.Data;
 using Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler;
 using Com.CompanyName.OnlineShop.ComponentLibrary.Entity;
 using Com.CompanyName.OnlineShop.ComponentLibrary.Model;
 
 namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
 {
-    public class ProductsController : ApiController
+    public class ProductsController : ApiController , IAPIController<Product>
     {
         private ProductDataHandler handler = new ProductDataHandler();
 
         /// <summary>
         /// Get full list of products available in db
         /// </summary>
-        /// <returns>Queryable list of product type</returns>
+        /// <returns>Enumerable list of product type</returns>
         [HttpGet]
-        public IQueryable<Product> Get()
+        [ResponseType(typeof(IEnumerable<Product>))]
+        public IHttpActionResult Get()
         {
-            using (handler)
+            try
             {
-                return (IQueryable<Product>)handler.Get();
+                using (handler)
+                {
+                    return Ok(handler.Get());
+                }
+
+            }
+            catch (SqlException)
+            {
+                return InternalServerError();
             }
 
         }
 
         /// <summary>
-        /// Get a single mataching product against provided product key
+        /// Get a single matching product against provided product key
         /// </summary>
         /// <param name="id">product primary key</param>
-        /// <returns>an object of product</returns>
+        /// <returns>an object of product type</returns>
         [HttpGet]
         [ResponseType(typeof(Product))]
-        public IHttpActionResult Get(int id)
+        public IHttpActionResult Get([FromUri]int id)
         {
-            Product product = null;
-
-            using (handler)
+            try
             {
-                product = handler.Get(id);
-            }
-           
-            if (product == null)
-            {
-                return NotFound();
-            }
+                Product product = null;
 
-            return Ok(product);
+                using (handler)
+                {
+                    product = handler.Get(id);
+                }
+
+                if (product == null)
+                {
+                    return NotFound();
+                }
+
+                return Ok(product);
+            }
+            catch (SqlException)
+            {
+                return InternalServerError();
+            }
+            
         }
 
         /// <summary>
-        /// change an existing product
+        /// Update an existing product
         /// </summary>
         /// <param name="id">product primary key that needs to be changed</param>
         /// <param name="product">complete product type with changed data</param>
-        /// <returns>provide product type with  model state is return in case of invalid changes</returns>
+        /// <returns>Model state is return in case of invalid changes</returns>
         [HttpPut]
-        [ResponseType(typeof(Product))]
-        public IHttpActionResult Change(int id, Product product)
+        public IHttpActionResult Change([FromUri]int id,[FromBody] Product product)
         {
             product.ProductId = id;
 
@@ -73,61 +91,86 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
                 return BadRequest(ModelState);
             }
 
-            using (handler)
+            try
             {
-                if (ProductExists(id))
+                using (handler)
                 {
-                    handler.Change(product);
+                    if (Exists(id))
+                    {
+                        handler.Change(product);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
                 }
-                else
-                {
-                    return NotFound();
-                }
+            }
+            catch (SqlException)
+            {
+                return InternalServerError();
             }
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
         /// <summary>
-        /// Add new product type
+        /// Add new product info
         /// </summary>
         /// <param name="product">Complete product type with new data</param>
-        /// <returns>responds with newly added product</returns>
+        /// <returns>Model state is return in case of invalid changes</returns>
         [HttpPost]
-        [ResponseType(typeof(Product))]
-        public IHttpActionResult Add(Product product)
+        public IHttpActionResult Add([FromBody]Product product)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            using (handler)
+            try
             {
-                handler.Add(product);
-                return Ok(handler.Get(product.ProductId));
+                using (handler)
+                {
+                    handler.Add(product);
+                }
             }
+            catch (SqlException)
+            {
+                return InternalServerError();
+            }
+
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
+        /// <summary>
+        /// delete the product from database
+        /// </summary>
+        /// <param name="id">product key which needs to be removed</param>
+        /// <returns>No content is returned</returns>
         [HttpDelete]
-        [ResponseType(typeof(Product))]
-        public IHttpActionResult Remove(int id)
-        {
-            Product product = null;
-
-            using (handler)
+        public IHttpActionResult Remove([FromUri]int id)
+        {   
+            try
             {
-                product = handler.Get(id);
+                Product product = null;
 
-                if (product == null)
+                using (handler)
                 {
-                    return NotFound();
+                    if (Exists(id))
+                    {
+                        handler.Remove(product);
+                    }
+                    else
+                    {
+                        return NotFound();
+                    }
                 }
-
-                handler.Remove(product);
             }
-
-            return Ok(product);
+            catch (SqlException)
+            {
+                return InternalServerError();
+            }
+            
+            return StatusCode(HttpStatusCode.NoContent);
         }
 
         protected override void Dispose(bool disposing)
@@ -139,7 +182,7 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
             base.Dispose(disposing);
         }
 
-        private bool ProductExists(int id)
+        private bool Exists(int id)
         {
             return handler.Get(id).ProductId > 0;
         }
