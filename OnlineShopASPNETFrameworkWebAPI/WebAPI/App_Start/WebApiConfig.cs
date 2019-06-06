@@ -1,8 +1,10 @@
 ﻿using Com.CompanyName.OnlineShop.WebAPI.Filter;
+using Com.CompanyName.OnlineShop.WebAPI.Logger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using System.Web.Http.ExceptionHandling;
 
 namespace Com.CompanyName.OnlineShop.WebAPI
 {
@@ -10,7 +12,10 @@ namespace Com.CompanyName.OnlineShop.WebAPI
     {
         public static void Register(HttpConfiguration config)
         {
+
             // Web API configuration and services
+            config.Services.Replace(typeof(IExceptionLogger), new UnhandledExceptionLogger());
+
             config.Filters.Add(new DbUpdateExceptionFilterAttribute());
 
             // Web API routes
