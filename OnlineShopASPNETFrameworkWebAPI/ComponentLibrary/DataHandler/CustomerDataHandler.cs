@@ -112,7 +112,7 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             return entity;
         }
 
-        public IEnumerable<Customer> Get(string name)
+        public IEnumerable<Customer> Find(string name)
         {
             IEnumerable<Customer> list = new List<Customer>();
 

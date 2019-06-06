@@ -16,7 +16,8 @@ using Com.CompanyName.OnlineShop.ComponentLibrary.Model;
 
 namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
 {
-    public class ProductsController : ApiController , IAPIController<Product>
+    [RoutePrefix("api/Products")]
+    public class ProductsController : ApiController , IController<Product>
     {
         private ProductDataHandler handler = new ProductDataHandler();
 
@@ -48,7 +49,7 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
         /// </summary>
         /// <param name="id">product primary key</param>
         /// <returns>an object of product type</returns>
-        [HttpGet]
+        [Route("{id:int}"),HttpGet]
         [ResponseType(typeof(Product))]
         public IHttpActionResult Get([FromUri]int id)
         {
@@ -79,15 +80,15 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
         /// find products as per given name
         /// </summary>
         /// <returns>Enumerable list of product type</returns>
-        [HttpGet]
+        [Route("{name:alpha}"),HttpGet]
         [ResponseType(typeof(IEnumerable<Product>))]
-        public IHttpActionResult Get([FromUri]string name)
+        public IHttpActionResult Find([FromUri]string name)
         {
             try
             {
                 using (handler)
                 {
-                    return Ok(handler.Get(name));
+                    return Ok(handler.Find(name));
                 }
             }
             catch (SqlException)
@@ -102,6 +103,7 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
         /// <param name="id">product primary key that needs to be changed</param>
         /// <param name="product">complete product type with changed data</param>
         /// <returns>Model state is return in case of invalid changes</returns>
+        
         [HttpPut]
         public IHttpActionResult Change([FromUri]int id,[FromBody] Product product)
         {

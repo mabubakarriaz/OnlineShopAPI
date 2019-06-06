@@ -108,7 +108,7 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             return entity;
         }
 
-        public IEnumerable<CartItem> Get(string name)
+        public IEnumerable<CartItem> Find(string name)
         {
             IEnumerable<CartItem> list = new List<CartItem>();
 

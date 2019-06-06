@@ -1,16 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Http;
+﻿using System.Web.Http;
 
 namespace Com.CompanyName.OnlineShop.ComponentLibrary.Data
 {
-    public interface IAPIController<T>
+    public interface IController<T>
     {
         IHttpActionResult Get();
         IHttpActionResult Get([FromUri]int id);
+        IHttpActionResult Find([FromUri]string name);
         IHttpActionResult Change([FromUri]int id, [FromBody] T aType);
         IHttpActionResult Add([FromBody] T aType);
         IHttpActionResult Remove([FromUri]int id);

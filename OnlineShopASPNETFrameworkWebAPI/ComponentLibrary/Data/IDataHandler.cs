@@ -16,6 +16,6 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.Data
 
         T Get(int key);
 
-        IEnumerable<T> Get(string name);
+        IEnumerable<T> Find(string name);
     }
 }

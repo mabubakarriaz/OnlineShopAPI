@@ -65,7 +65,7 @@
     <Compile Include="DataHandler\CategoryDataHandler.cs" />
     <Compile Include="DataHandler\CustomerDataHandler.cs" />
     <Compile Include="DataHandler\ProductDataHandler.cs" />
-    <Compile Include="Data\IAPIController.cs" />
+    <Compile Include="Data\IController.cs" />
     <Compile Include="Data\IDataHandler.cs" />
     <Compile Include="Data\QueryExecute.cs" />
     <Compile Include="Entity\Cart.cs" />
