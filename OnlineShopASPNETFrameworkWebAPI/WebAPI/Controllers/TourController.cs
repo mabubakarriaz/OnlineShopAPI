@@ -21,6 +21,12 @@ namespace WebAPI.Controllers
 
         public IHttpActionResult Post()
         {
+            throw new HttpResponseException(
+                new HttpResponseMessage
+                {
+                    StatusCode = HttpStatusCode.BadRequest,
+                    Content = new StringContent("my error message")
+                });
             return Ok("Post");
         }
 
