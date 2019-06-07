@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Web;
 using System.Web.Http.Filters;
 
-namespace Com.CompanyName.OnlineShop.WebAPI.Filter
+namespace Com.CompanyName.OnlineShop.WebAPI.Exceptions
 {
     public class DbUpdateExceptionFilterAttribute : ExceptionFilterAttribute
     {

@@ -1,5 +1,4 @@
-﻿using Com.CompanyName.OnlineShop.WebAPI.Filter;
-using Com.CompanyName.OnlineShop.WebAPI.Logger;
+﻿using Com.CompanyName.OnlineShop.WebAPI.Exceptions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,8 +14,10 @@ namespace Com.CompanyName.OnlineShop.WebAPI
 
             // Web API configuration and services
             config.Services.Replace(typeof(IExceptionLogger), new UnhandledExceptionLogger());
+            config.Services.Replace(typeof(IExceptionHandler), new UnhandledExceptionHandler());
 
             config.Filters.Add(new DbUpdateExceptionFilterAttribute());
+            
 
             // Web API routes
             config.MapHttpAttributeRoutes();
