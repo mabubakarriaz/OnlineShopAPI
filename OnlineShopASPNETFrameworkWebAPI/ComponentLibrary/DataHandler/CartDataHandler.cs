@@ -108,6 +108,11 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             return entity;
         }
 
+        public bool Exists(int key)
+        {
+            return Get(key).CartId > 0;
+        }
+
         public IEnumerable<Cart> Find(string name)
         {
             IEnumerable<Cart> list = new List<Cart>();

@@ -94,7 +94,7 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
 
             using (handler)
             {
-                if (Exists(id))
+                if (handler.Exists(id))
                 {
                     handler.Change(product);
                 }
@@ -124,8 +124,8 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
             {
                 handler.Add(product);
             }
-
-            return StatusCode(HttpStatusCode.NoContent);
+            
+            return CreatedAtRoute("DefaultApi", new { id = product.ProductId }, product);
         }
 
         /// <summary>
@@ -140,7 +140,7 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
 
             using (handler)
             {
-                if (Exists(id))
+                if (handler.Exists(id))
                 {
                     handler.Remove(product);
                 }
@@ -150,7 +150,7 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
                 }
             }
 
-            return StatusCode(HttpStatusCode.NoContent);
+            return Ok(product);
         }
 
         protected override void Dispose(bool disposing)
@@ -162,9 +162,5 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
             base.Dispose(disposing);
         }
 
-        private bool Exists(int id)
-        {
-            return handler.Get(id).ProductId > 0;
-        }
     }
 }

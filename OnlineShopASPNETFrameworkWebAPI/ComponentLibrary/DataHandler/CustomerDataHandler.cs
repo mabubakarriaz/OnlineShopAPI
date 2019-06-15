@@ -112,6 +112,11 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             return entity;
         }
 
+        public bool Exists(int key)
+        {
+            return Get(key).CustomerId > 0;
+        }
+
         public IEnumerable<Customer> Find(string name)
         {
             IEnumerable<Customer> list = new List<Customer>();

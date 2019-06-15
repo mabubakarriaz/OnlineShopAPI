@@ -108,6 +108,11 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             return entity;
         }
 
+        public bool Exists(int key)
+        {
+            return Get(key).CategoryId > 0;
+        }
+
         public IEnumerable<Category> Find(string name)
         {
             IEnumerable<Category> list = new List<Category>();
