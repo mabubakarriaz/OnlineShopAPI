@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Web;
+﻿using System.Diagnostics;
 using System.Web.Http.ExceptionHandling;
 
 namespace Com.CompanyName.OnlineShop.WebAPI.Exceptions
@@ -11,7 +7,7 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Exceptions
     {
         public override void Log(ExceptionLoggerContext context)
         {
-            
+
             string errorMessage = $"Exception-Message: {context.Exception.Message}\n" +
                 $"Inner-Exception-Message: {context.Exception.InnerException.Message}\n" +
                 $"Context: {context.Request.ToString()}\n";

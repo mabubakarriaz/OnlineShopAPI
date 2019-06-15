@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Data.SqlClient;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using System.Web.Http.Description;
-using Com.CompanyName.OnlineShop.ComponentLibrary.Data;
+﻿using Com.CompanyName.OnlineShop.ComponentLibrary.Data;
 using Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler;
 using Com.CompanyName.OnlineShop.ComponentLibrary.Entity;
-using Com.CompanyName.OnlineShop.ComponentLibrary.Model;
+using System.Collections.Generic;
+using System.Net;
+using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
 {
     [RoutePrefix("api/Products")]
-    public class ProductsController : ApiController , IController<Product>
+    public class ProductsController : ApiController, IController<Product>
     {
         private ProductDataHandler handler = new ProductDataHandler();
 
@@ -124,7 +116,7 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
             {
                 handler.Add(product);
             }
-            
+
             return CreatedAtRoute("DefaultApi", new { id = product.ProductId }, product);
         }
 

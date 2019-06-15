@@ -112,7 +112,8 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler
             return entity;
         }
 
-        public bool Exists(int key) {
+        public bool Exists(int key)
+        {
 
             return Get(key).ProductId > 0;
         }

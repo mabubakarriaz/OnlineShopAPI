@@ -1,19 +1,15 @@
-﻿using Com.CompanyName.OnlineShop.ComponentLibrary.Model;
-using Com.CompanyName.OnlineShop.ComponentLibrary.Entity;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity.Migrations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Com.CompanyName.OnlineShop.ComponentLibrary.Entity;
+using Com.CompanyName.OnlineShop.ComponentLibrary.Model;
 using Com.CompanyName.OnlineShop.ComponentLibrary.Types;
+using System.Data.Entity.Migrations;
 
 namespace Com.CompanyName.OnlineShop.ComponentLibrary.Data
 {
     public class SeedData
     {
 
-        public void Create(OnlineShopContext db) {
+        public void Create(OnlineShopContext db)
+        {
 
             //seed values for category
             db.Categories.AddOrUpdate(x => x.CategoryId,

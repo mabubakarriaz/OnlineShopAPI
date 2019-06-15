@@ -1,7 +1,4 @@
 ﻿using Com.CompanyName.OnlineShop.WebAPI.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
 
@@ -19,7 +16,7 @@ namespace Com.CompanyName.OnlineShop.WebAPI
             config.Services.Replace(typeof(IExceptionHandler), new UnhandledExceptionHandler());
 
             config.Filters.Add(new DbUpdateExceptionFilterAttribute());
-            
+
 
             // Web API routes
             config.MapHttpAttributeRoutes();
@@ -28,7 +25,7 @@ namespace Com.CompanyName.OnlineShop.WebAPI
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",
                 defaults: new { id = RouteParameter.Optional },
-                constraints: new { id = @"/d+" } 
+                constraints: new { id = @"/d+" }
             );
 
             config.Routes.MapHttpRoute(
