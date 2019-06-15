@@ -8,95 +8,146 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
+using Com.CompanyName.OnlineShop.ComponentLibrary.Data;
+using Com.CompanyName.OnlineShop.ComponentLibrary.DataHandler;
 using Com.CompanyName.OnlineShop.ComponentLibrary.Entity;
 using Com.CompanyName.OnlineShop.ComponentLibrary.Model;
 
 namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
 {
-    public class CategoriesController : ApiController
+    [RoutePrefix("api/Categories")]
+    public class CategoriesController : ApiController, IController<Category>
     {
-        private OnlineShopContext db = new OnlineShopContext();
+        private CategoryDataHandler handler = new CategoryDataHandler();
 
-        // GET: api/Categories
-        public IQueryable<Category> GetCategories()
+        /// <summary>
+        /// Get full list of categories available in db
+        /// </summary>
+        /// <returns>Enumerable list of category type</returns>
+        [HttpGet]
+        [ResponseType(typeof(IEnumerable<Category>))]
+        public IHttpActionResult Get()
         {
-            return db.Categories;
+            using (handler)
+            {
+                return Ok(handler.Get());
+            }
         }
 
-        // GET: api/Categories/5
+        /// <summary>
+        /// Get a single matching category against provided category key
+        /// </summary>
+        /// <param name="id">category primary key</param>
+        /// <returns>an object of category type</returns>
+        [Route("{id:int}"), HttpGet]
         [ResponseType(typeof(Category))]
-        public IHttpActionResult GetCategory(int id)
+        public IHttpActionResult Get([FromUri]int id)
         {
-            Category category = db.Categories.Find(id);
+            Category category = null;
+
+            using (handler)
+            {
+                category = handler.Get(id);
+            }
+
             if (category == null)
             {
                 return NotFound();
             }
 
             return Ok(category);
+
         }
 
-        // PUT: api/Categories/5
-        [ResponseType(typeof(void))]
-        public IHttpActionResult PutCategory(int id, Category category)
+        /// <summary>
+        /// find categories as per given name
+        /// </summary>
+        /// <returns>Enumerable list of category type</returns>
+        [Route("{name:alpha}"), HttpGet]
+        [ResponseType(typeof(IEnumerable<Category>))]
+        public IHttpActionResult Find([FromUri]string name)
         {
+            using (handler)
+            {
+                return Ok(handler.Find(name));
+            }
+
+        }
+
+        /// <summary>
+        /// Update an existing category
+        /// </summary>
+        /// <param name="id">category primary key that needs to be changed</param>
+        /// <param name="category">complete category type with changed data</param>
+        /// <returns>Model state is return in case of invalid changes</returns>
+
+        [HttpPut]
+        public IHttpActionResult Change([FromUri]int id, [FromBody] Category category)
+        {
+            category.CategoryId = id;
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != category.CategoryId)
+            using (handler)
             {
-                return BadRequest();
-            }
-
-            db.Entry(category).State = EntityState.Modified;
-
-            try
-            {
-                db.SaveChanges();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CategoryExists(id))
+                if (handler.Exists(id))
                 {
-                    return NotFound();
+                    handler.Change(category);
                 }
                 else
                 {
-                    throw;
+                    return NotFound();
                 }
             }
 
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/Categories
-        [ResponseType(typeof(Category))]
-        public IHttpActionResult PostCategory(Category category)
+        /// <summary>
+        /// Add new category info
+        /// </summary>
+        /// <param name="category">Complete category type with new data</param>
+        /// <returns>Model state is return in case of invalid changes</returns>
+        [HttpPost]
+        public IHttpActionResult Add([FromBody]Category category)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            db.Categories.Add(category);
-            db.SaveChanges();
+            using (handler)
+            {
+                handler.Add(category);
+            }
+
             return CreatedAtRoute("DefaultApi", new { id = category.CategoryId }, category);
         }
 
-        // DELETE: api/Categories/5
-        [ResponseType(typeof(Category))]
-        public IHttpActionResult DeleteCategory(int id)
+        /// <summary>
+        /// delete the category from database
+        /// </summary>
+        /// <param name="id">category key which needs to be removed</param>
+        /// <returns>No content is returned</returns>
+        [HttpDelete]
+        public IHttpActionResult Remove([FromUri]int id)
         {
-            Category category = db.Categories.Find(id);
-            if (category == null)
-            {
-                return NotFound();
-            }
+            Category category = null;
 
-            db.Categories.Remove(category);
-            db.SaveChanges();
+            using (handler)
+            {
+                if (handler.Exists(id))
+                {
+                    handler.Remove(category);
+                }
+                else
+                {
+                    return NotFound();
+                }
+            }
 
             return Ok(category);
         }
@@ -105,14 +156,10 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
         {
             if (disposing)
             {
-                db.Dispose();
+                handler.Dispose();
             }
             base.Dispose(disposing);
         }
 
-        private bool CategoryExists(int id)
-        {
-            return db.Categories.Count(e => e.CategoryId == id) > 0;
-        }
     }
 }
