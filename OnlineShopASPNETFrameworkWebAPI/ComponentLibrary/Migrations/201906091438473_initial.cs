@@ -3,7 +3,7 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class initial : DbMigration
     {
         public override void Up()
         {
@@ -39,10 +39,10 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.Migrations
                 c => new
                     {
                         CustomerId = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        Email = c.String(),
-                        Password = c.String(),
-                        Address = c.String(),
+                        Name = c.String(nullable: false, maxLength: 50, unicode: false),
+                        Email = c.String(maxLength: 256, unicode: false),
+                        Password = c.String(maxLength: 50, unicode: false),
+                        Address = c.String(maxLength: 100, unicode: false),
                     })
                 .PrimaryKey(t => t.CustomerId);
             
@@ -51,8 +51,8 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.Migrations
                 c => new
                     {
                         ProductId = c.Int(nullable: false, identity: true),
-                        Name = c.String(),
-                        Description = c.String(),
+                        Name = c.String(nullable: false, maxLength: 50, unicode: false),
+                        Description = c.String(maxLength: 100, unicode: false),
                         CategoryId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.ProductId)
@@ -64,8 +64,8 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.Migrations
                 c => new
                     {
                         CategoryId = c.Int(nullable: false, identity: true),
-                        CategoryName = c.String(),
-                        SubCategoryName = c.String(),
+                        CategoryName = c.String(nullable: false, maxLength: 50, unicode: false),
+                        SubCategoryName = c.String(nullable: false, maxLength: 50, unicode: false),
                     })
                 .PrimaryKey(t => t.CategoryId);
             

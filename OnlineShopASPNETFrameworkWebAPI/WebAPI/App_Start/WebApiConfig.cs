@@ -13,6 +13,8 @@ namespace Com.CompanyName.OnlineShop.WebAPI
         {
 
             // Web API configuration and services
+            config.EnableCors();
+
             config.Services.Replace(typeof(IExceptionLogger), new UnhandledExceptionLogger());
             config.Services.Replace(typeof(IExceptionHandler), new UnhandledExceptionHandler());
 

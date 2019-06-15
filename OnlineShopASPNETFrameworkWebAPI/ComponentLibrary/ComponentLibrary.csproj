@@ -68,11 +68,12 @@
     <Compile Include="Data\IController.cs" />
     <Compile Include="Data\IDataHandler.cs" />
     <Compile Include="Data\QueryExecute.cs" />
+    <Compile Include="Data\SeedData.cs" />
     <Compile Include="Entity\Cart.cs" />
     <Compile Include="Entity\CartItem.cs" />
-    <Compile Include="Migrations\201906041800196_Initial.cs" />
-    <Compile Include="Migrations\201906041800196_Initial.Designer.cs">
-      <DependentUpon>201906041800196_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\201906091438473_initial.cs" />
+    <Compile Include="Migrations\201906091438473_initial.Designer.cs">
+      <DependentUpon>201906091438473_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Types\CartStatus.cs" />
@@ -87,8 +88,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201906041800196_Initial.resx">
-      <DependentUpon>201906041800196_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201906091438473_initial.resx">
+      <DependentUpon>201906091438473_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

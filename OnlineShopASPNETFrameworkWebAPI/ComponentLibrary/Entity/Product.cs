@@ -17,12 +17,12 @@ namespace Com.CompanyName.OnlineShop.ComponentLibrary.Entity
 
         [Required]
         [StringLength(50)]
-        [Column(TypeName = "varchar(50)")]
+        [Column(TypeName = "varchar")]
         [RegularExpression(@"^[a-z A-Z]+$", ErrorMessage = "Use alphabets only please")]
         public string Name { get; set; }
 
         [StringLength(100)]
-        [Column(TypeName = "varchar(100)")]
+        [Column(TypeName = "varchar")]
         public string Description { get; set; }
 
         public int CategoryId { get; set; }
