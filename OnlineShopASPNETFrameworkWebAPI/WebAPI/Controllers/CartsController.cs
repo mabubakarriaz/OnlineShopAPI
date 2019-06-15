@@ -15,17 +15,17 @@ using Com.CompanyName.OnlineShop.ComponentLibrary.Model;
 
 namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
 {
-    [RoutePrefix("api/CartItems")]
-    public class CartItemsController : ApiController, IController<CartItem>
+    [RoutePrefix("api/Carts")]
+    public class CartsController : ApiController, IController<Cart>
     {
-        private CartItemDataHandler handler = new CartItemDataHandler();
+        private CartDataHandler handler = new CartDataHandler();
 
         /// <summary>
-        /// Get full list of CartItems available in db
+        /// Get full list of Carts available in db
         /// </summary>
-        /// <returns>Enumerable list of cart item type</returns>
+        /// <returns>Enumerable list of cart type</returns>
         [HttpGet]
-        [ResponseType(typeof(IEnumerable<CartItem>))]
+        [ResponseType(typeof(IEnumerable<Cart>))]
         public IHttpActionResult Get()
         {
             using (handler)
@@ -35,36 +35,36 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Get a single matching cart item against provided cart item key
+        /// Get a single matching cart against provided cart key
         /// </summary>
-        /// <param name="id">cart item primary key</param>
-        /// <returns>an object of cart item type</returns>
+        /// <param name="id">cart primary key</param>
+        /// <returns>an object of cart type</returns>
         [Route("{id:int}"), HttpGet]
-        [ResponseType(typeof(CartItem))]
+        [ResponseType(typeof(Cart))]
         public IHttpActionResult Get([FromUri]int id)
         {
-            CartItem cartItem = null;
+            Cart cart = null;
 
             using (handler)
             {
-                cartItem = handler.Get(id);
+                cart = handler.Get(id);
             }
 
-            if (cartItem == null)
+            if (cart == null)
             {
                 return NotFound();
             }
 
-            return Ok(cartItem);
+            return Ok(cart);
 
         }
 
         /// <summary>
-        /// find CartItems as per given name
+        /// find Carts as per given name
         /// </summary>
-        /// <returns>Enumerable list of cart item type</returns>
+        /// <returns>Enumerable list of cart type</returns>
         [Route("{name:alpha}"), HttpGet]
-        [ResponseType(typeof(IEnumerable<CartItem>))]
+        [ResponseType(typeof(IEnumerable<Cart>))]
         public IHttpActionResult Find([FromUri]string name)
         {
             using (handler)
@@ -75,16 +75,16 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Update an existing cart item
+        /// Update an existing cart
         /// </summary>
-        /// <param name="id">cart item primary key that needs to be changed</param>
-        /// <param name="cartItem">complete cart item type with changed data</param>
+        /// <param name="id">cart primary key that needs to be changed</param>
+        /// <param name="cart">complete cart type with changed data</param>
         /// <returns>Model state is return in case of invalid changes</returns>
 
         [HttpPut]
-        public IHttpActionResult Change([FromUri]int id, [FromBody] CartItem cartItem)
+        public IHttpActionResult Change([FromUri]int id, [FromBody] Cart cart)
         {
-            cartItem.CartItemId = id;
+            cart.CartId = id;
 
             if (!ModelState.IsValid)
             {
@@ -95,7 +95,7 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
             {
                 if (handler.Exists(id))
                 {
-                    handler.Change(cartItem);
+                    handler.Change(cart);
                 }
                 else
                 {
@@ -107,12 +107,12 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Add new cart item info
+        /// Add new cart info
         /// </summary>
-        /// <param name="cartItem">Complete cart item type with new data</param>
+        /// <param name="cart">Complete cart type with new data</param>
         /// <returns>Model state is return in case of invalid changes</returns>
         [HttpPost]
-        public IHttpActionResult Add([FromBody]CartItem cartItem)
+        public IHttpActionResult Add([FromBody]Cart cart)
         {
             if (!ModelState.IsValid)
             {
@@ -121,27 +121,27 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
 
             using (handler)
             {
-                handler.Add(cartItem);
+                handler.Add(cart);
             }
 
-            return CreatedAtRoute("DefaultApi", new { id = cartItem.CartItemId }, cartItem);
+            return CreatedAtRoute("DefaultApi", new { id = cart.CartId }, cart);
         }
 
         /// <summary>
-        /// delete the cart item from database
+        /// delete the cart from database
         /// </summary>
-        /// <param name="id">cart item key which needs to be removed</param>
+        /// <param name="id">cart key which needs to be removed</param>
         /// <returns>No content is returned</returns>
         [HttpDelete]
         public IHttpActionResult Remove([FromUri]int id)
         {
-            CartItem cartItem = null;
+            Cart cart = null;
 
             using (handler)
             {
                 if (handler.Exists(id))
                 {
-                    handler.Remove(cartItem);
+                    handler.Remove(cart);
                 }
                 else
                 {
@@ -149,7 +149,7 @@ namespace Com.CompanyName.OnlineShop.WebAPI.Controllers
                 }
             }
 
-            return Ok(cartItem);
+            return Ok(cart);
         }
 
         protected override void Dispose(bool disposing)
